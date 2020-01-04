@@ -22,10 +22,10 @@ name_sorted = sorted(name)
 for word in word_list:
     word = word.lower()
     if word != name:
-        if sorted(word) == name_sorted:        
+        if sorted(word) == name_sorted:
             anagram_list.append(word)
 
-#print out list of anagrams
+# print out list of anagrams
 print()
 if len(anagram_list) == 0:
     print("You need a larger dictionary or a new name!")

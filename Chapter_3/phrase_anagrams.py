@@ -16,7 +16,8 @@ dict_file = sorted(dict_file)
 
 ini_name = input("Enter a name: ")
 
-#______________________________________________________________________________
+# ______________________________________________________________________________
+
 
 def find_anagrams(name, word_list):
     """Read name & dictionary file & display all anagrams IN name."""
@@ -35,6 +36,7 @@ def find_anagrams(name, word_list):
     print("Remaining letters = {}".format(name))
     print("Number of remaining letters = {}".format(len(name)))
     print("Number of remaining (real word)anagrams = {}".format(len(anagrams)))
+
 
 def process_choice(name):
     """Check user choice for validity, return choice & left-over letters."""
@@ -56,6 +58,7 @@ def process_choice(name):
             print("Won't work! Make another choice!", file=sys.stderr)
     name = ''.join(left_over_list)  # makes display more readable
     return choice, name
+
 
 def main():
     """Help user build anagram phrase from their name."""
@@ -79,7 +82,7 @@ def main():
 
             choice, name = process_choice(name)
             phrase += choice + ' '
-            
+
         elif len(temp_phrase) == limit:
             print("\n***** FINISHED!!! *****\n")
             print("Anagram of name =", end=" ")
@@ -88,10 +91,11 @@ def main():
             try_again = input('\n\nTry again? (Press Enter else "n" to quit)\n ')
             if try_again.lower() == "n":
                 running = False
-                sys.exit()  
+                sys.exit()
             else:
                 main()
-#______________________________________________________________________________           
+# ______________________________________________________________________________
+
 
 if __name__ == '__main__':
     main()
