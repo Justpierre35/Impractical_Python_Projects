@@ -9,6 +9,7 @@ from itertools import permutations
 from collections import Counter
 import load_dictionary
 
+
 def main():
     """Load files, run filters, allow user to view anagrams by 1st letter."""
     name = 'tmvoordle'
@@ -17,13 +18,14 @@ def main():
     word_list_ini = load_dictionary.load('2of4brif.txt')
 
     trigrams_filtered = load_dictionary.load('least-likely_trigrams.txt')
-    
+
     word_list = prep_words(name, word_list_ini)
     filtered_cv_map = cv_map_words(word_list)
     filter_1 = cv_map_filter(name, filtered_cv_map)
     filter_2 = trigram_filter(filter_1, trigrams_filtered)
     filter_3 = letter_pair_filter(filter_2)
     view_by_letter(name, filter_3)
+
 
 def prep_words(name, word_list_ini):
     """Prep word list for finding anagrams."""
@@ -33,6 +35,7 @@ def prep_words(name, word_list_ini):
                  if len(word) == len_name]
     print("length of new word_list = {}".format(len(word_list)))
     return word_list
+
 
 def cv_map_words(word_list):
     """Map letters in words to consonants & vowels."""
@@ -58,7 +61,8 @@ def cv_map_words(word_list):
         filtered_cv_map.add(pattern)
     print("length filtered_cv_map = {}".format(len(filtered_cv_map)))
     return filtered_cv_map
-    
+
+
 def cv_map_filter(name, filtered_cv_map):
     """Remove permutations of words based on unlikely cons-vowel combos."""
     perms = {''.join(i) for i in permutations(name)}
@@ -73,9 +77,10 @@ def cv_map_filter(name, filtered_cv_map):
             else:
                 temp += 'c'
         if temp in filtered_cv_map:
-            filter_1.add(candidate)                
+            filter_1.add(candidate)
     print("# choices after filter_1 = {}".format(len(filter_1)))
     return filter_1
+
 
 def trigram_filter(filter_1, trigrams_filtered):
     """Remove unlikely trigrams from permutations."""
@@ -83,11 +88,12 @@ def trigram_filter(filter_1, trigrams_filtered):
     for candidate in filter_1:
         for triplet in trigrams_filtered:
             triplet = triplet.lower()
-            if triplet in candidate: 
+            if triplet in candidate:
                 filtered.add(candidate)
-    filter_2 = filter_1 - filtered        
+    filter_2 = filter_1 - filtered
     print("# of choices after filter_2 = {}".format(len(filter_2)))
     return filter_2
+
 
 def letter_pair_filter(filter_2):
     """Remove unlikely letter-pairs from permutations."""
@@ -103,11 +109,12 @@ def letter_pair_filter(filter_2):
         for fp in first_pair_rejects:
             if candidate.startswith(fp):
                 filtered.add(candidate)
-    filter_3 = filter_2 - filtered    
+    filter_3 = filter_2 - filtered
     print("# of choices after filter_3 = {}".format(len(filter_3)))
     if 'voldemort' in filter_3:
         print("Voldemort found!", file=sys.stderr)
     return filter_3
+
 
 def view_by_letter(name, filter_3):
     """Filter to anagrams starting with input letter."""
@@ -124,6 +131,7 @@ def view_by_letter(name, filter_3):
         view_by_letter(name, filter_3)
     else:
         sys.exit()
+
 
 if __name__ == '__main__':
     main()
